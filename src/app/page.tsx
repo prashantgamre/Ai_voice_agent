@@ -13,6 +13,7 @@ import {
 import { Room, Track, RoomEvent } from 'livekit-client';
 import '@livekit/components-styles';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { VoiceAgentLanding } from '@/components/VoiceAgentLanding';
 
 export default function Page() {
   const [connecting, setConnecting] = useState(false);
@@ -91,33 +92,12 @@ export default function Page() {
 
   if (!connected) {
     return (
-      <div className="min-h-dvh grid place-items-center p-6">
-        <div className="space-y-4 text-center">
-        <h1 className="text-4xl md:text-6xl font-semibold">VAUCH AI VOICE AGENT</h1>
-        <h2 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>Your Personal <span className="text-blue-600 dark:text-blue-500">AI Voice Agent</span></h2>
-        <img className="mx-auto flex  hover:cursor-pointer" src="/cropped-Vauch-Info-Logo-1-1-300x194.png" alt="Vauch Info Tech Logo" onClick={() => window.open('https://www.vauchinfotech.com', '_blank')} />
-        </div>
-        <div className="w-full max-w-md space-y-4 text-center">
-          {sessionId && (
-            <div className="mx-auto inline-block rounded bg-gray-100 text-gray-800 px-3 py-1 text-sm">
-              Session ID: <span className="font-mono font-semibold">{sessionId}</span>
-            </div>
-          )}
-          {error && (
-            <div className="text-sm text-red-600" role="alert">
-              {error}
-            </div>
-          )}
-          <button
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-bold text-white disabled:opacity-60 hover:bg-blue-700"
-            onClick={() => connect()}
-            disabled={connecting}
-          >
-            {connecting ? 'Connecting...' : error ? 'Retry Connection' : 'Start Voice Session'}
-          </button>
-          <p className="text-xs text-gray-500">Make sure you allow microphone access when prompted.</p>
-        </div>
-      </div>
+      <VoiceAgentLanding
+        onStart={() => connect()}
+        isConnecting={connecting}
+        error={error}
+        sessionId={sessionId}
+      />
     );
   }
 
